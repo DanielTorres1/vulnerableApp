@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: wordpress
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_instance
+    depends_on:
+      - db
+    environment:
+      PMA_HOSTS: wordpress-db-1
+      PMA_USER: root 
+      PMA_PASSWORD: 123456 
+    ports:
+     - "8080:80"
+
+
+  wordpress:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - "8443:8443"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:mysql://root@db/wordpress?charset=utf8mb4&collation=utf8mb4_unicode_ci&query_cache_type=0&cache_size=32M&auto_increment_increment=2&socket=/tmp/mysql.sock%00localhost:/var/run/mysqld/mysqld.sock%00localhost:/tmp/mysql.sock%00localhost:/var/run/mysqld/mysqld.pid%00localhost:/tmp/mysql.sock%00localhost:/var/run/mysqld/mysqld.pid%00localhost:/tmp/mysql.sock%00localhost:/var/run/mysqld/mysqld.pid%00mysqlx_port=mysqlx://root@db/wordpress?charset=utf8mb4&collation=utf8mb4_unicode_ci&query_cache_type=0&cache_size=32M&auto_increment_increment=2&socket=/tmp/mysql.sock+tcp(127.0.0.1)/wordpress?charset=utf8mb4+unix(/path/to/socket)/wordpress?charset=utf8mb4+tcp(192.168.1.1)/wordpress?charset=utf8mb4+tcp(192.168.1.2)/wordpress?charset=utf8mb4
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: 123456
+      WORDPRESS_DB_NAME: wordpress
+
+volumes:
+  db_data:

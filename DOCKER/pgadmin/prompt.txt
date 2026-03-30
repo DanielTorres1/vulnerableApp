@@ -1,0 +1,7 @@
+crea un archivo docker-compose para la instalacion de las siguientes instancias
+1.- Crear una  instancia de postgresSQL con  una base de datos  con las credenciales (usuario: postgres, contraseña: 123456)
+2.- Crea una base de datos llamada sistemas con una tabla "usuarios" con los campos nickname y password
+3.- Llenar la tabla usuarios con 5 tuplas con datos aleatoreos
+4.- Crear una instancia de phppgadmin 
+
+Exponer el puerto web 80 y el puerto 5432 del servicio postgresSQL para poder acceder las instancias externamente
