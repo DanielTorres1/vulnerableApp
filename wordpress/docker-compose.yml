@@ -1,0 +1,43 @@
+version: '3'
+services:
+  wordpress_latest:
+    image: wordpress:latest
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: mysql_latest
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: misuperpass
+      WORDPRESS_DB_NAME: wordpress_latest
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WPLANG', 'es_ES');
+      WORDPRESS_ADMIN_USER: admin  # Set the WordPress admin user
+      WORDPRESS_ADMIN_PASSWORD: admin  # Set the WordPress admin password
+    depends_on:
+      - mysql_latest
+
+  mysql_latest:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: misuperpass
+      MYSQL_DATABASE: wordpress_latest
+
+  wordpress_4_3:
+    image: wordpress:4.3
+    ports:
+      - 8081:80
+    environment:
+      WORDPRESS_DB_HOST: mysql_4_3
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: misuperpass
+      WORDPRESS_DB_NAME: wordpress_4_3
+      WORDPRESS_ADMIN_USER: admin  # Set the WordPress admin user
+      WORDPRESS_ADMIN_PASSWORD: admin  # Set the WordPress admin password
+    depends_on:
+      - mysql_4_3
+
+  mysql_4_3:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: misuperpass
+      MYSQL_DATABASE: wordpress_4_3
